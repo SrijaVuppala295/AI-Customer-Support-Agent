@@ -556,5 +556,4 @@ By building this workflow, you now understand:
 
 Built for the [Codédex](https://codedex.io) Project Tutorial Monthly Challenge 🌱
 
-*Questions? Drop a comment below — happy to help you get your own version running!*#   A I - C u s t o m e r - S u p p o r t - A g e n t  
- 
+*Questions? Drop a comment below — happy to help you get your own version running!*#
