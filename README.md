@@ -529,32 +529,135 @@ By building this workflow, you now understand:
 
 ## 10. Screenshots
 
-| Step | Screenshot |
-|------|------------|
-| 1. Create a New n8n Workflow | ![](./SS/1.png) |
-| 2. Add Gmail Trigger | ![](./SS/2.png) |
-| 3. Configure Gmail OAuth Credentials | ![](./SS/3.png) |
-| 4. Add Text Classifier | ![](./SS/4.png) |
-| 5. Configure Text Classifier Categories | ![](./SS/5.png) |
-| 6. Connect OpenRouter Chat Model | ![](./SS/6.png) |
-| 7. Configure OpenRouter Chat Model | ![](./SS/7.png) |
-| 8. Add AI Agent | ![](./SS/8.png) |
-| 9. Configure AI Agent (Prompt & System Instructions) | ![](./SS/9.png) |
-| 10. Connect Groq Chat Model | ![](./SS/10.png) |
-| 11. Configure Groq Chat Model | ![](./SS/11.png) |
-| 12. Add No Operation Node (Handle Non-Support Emails) | ![](./SS/12.png) |
-| 13. Add Pinecone Vector Store | ![](./SS/13.png) |
-| 14. Configure Pinecone Vector Store | ![](./SS/14.png) |
-| 15. Connect Embedding Model | ![](./SS/15.png) |
-| 16. Configure Google Gemini Embeddings | ![](./SS/16.png) |
-| 17. Add Gmail Label Node | ![](./SS/17.png) |
-| 18. Configure Gmail Label Node | ![](./SS/18.png) |
-| 19. Add Gmail Reply Node | ![](./SS/19.png) |
-| 20. Complete Workflow | ![](./SS/20.png) |
-| 21. Activate the Workflow | ![](./SS/21.png) |
-| 22. Send a Test Customer Support Email | ![](./SS/22.png) |
-| 23. Watch the Workflow Execute | ![](./SS/23.png) |
-| 24. AI-Generated Reply in Gmail | ![](./SS/24.png) |
+<table>
+  <tr>
+    <th width="35%">Step</th>
+    <th width="65%">Screenshot</th>
+  </tr>
+
+  <tr>
+    <td>1. Create a New n8n Workflow</td>
+    <td><img src="./SS/1.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>2. Add Gmail Trigger</td>
+    <td><img src="./SS/2.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>3. Configure Gmail OAuth Credentials</td>
+    <td><img src="./SS/3.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>4. Add Text Classifier</td>
+    <td><img src="./SS/4.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>5. Configure Text Classifier Categories</td>
+    <td><img src="./SS/5.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>6. Connect OpenRouter Chat Model</td>
+    <td><img src="./SS/6.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>7. Configure OpenRouter Chat Model</td>
+    <td><img src="./SS/7.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>8. Add AI Agent</td>
+    <td><img src="./SS/8.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>9. Configure AI Agent (Prompt & System Instructions)</td>
+    <td><img src="./SS/9.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>10. Connect Groq Chat Model</td>
+    <td><img src="./SS/10.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>11. Configure Groq Chat Model</td>
+    <td><img src="./SS/11.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>12. Add No Operation Node (Handle Non-Support Emails)</td>
+    <td><img src="./SS/12.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>13. Add Pinecone Vector Store</td>
+    <td><img src="./SS/13.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>14. Configure Pinecone Vector Store</td>
+    <td><img src="./SS/14.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>15. Connect Embedding Model</td>
+    <td><img src="./SS/15.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>16. Configure Google Gemini Embeddings</td>
+    <td><img src="./SS/16.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>17. Add Gmail Label Node</td>
+    <td><img src="./SS/17.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>18. Configure Gmail Label Node</td>
+    <td><img src="./SS/18.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>19. Add Gmail Reply Node</td>
+    <td><img src="./SS/19.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>20. Complete Workflow</td>
+    <td><img src="./SS/20.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>21. Activate the Workflow</td>
+    <td><img src="./SS/21.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>22. Send a Test Customer Support Email</td>
+    <td><img src="./SS/22.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>23. Watch the Workflow Execute</td>
+    <td><img src="./SS/23.png" width="650"></td>
+  </tr>
+
+  <tr>
+    <td>24. AI-Generated Reply in Gmail</td>
+    <td><img src="./SS/24.png" width="650"></td>
+  </tr>
+
+</table>
+
+
 
 ---
 
