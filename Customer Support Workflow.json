@@ -1,0 +1,329 @@
+{
+  "name": "Customer Support Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -448,
+        -32
+      ],
+      "id": "468f11e9-ebdb-4b7d-876d-f88bca672b54",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Xj6w3BvYBIwsrDml",
+          "name": "Gmail account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Customer Support",
+              "description": "An email that is related to help out a customer. Then may be asking questions about your policies or questions about your products or services."
+            },
+            {
+              "category": "Other",
+              "description": "Any email that is not related to customer support."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        -240,
+        -32
+      ],
+      "id": "68ffa6fa-fae4-415a-b8ff-55765bbdf3f5",
+      "name": "Text Classifier"
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-3-8b-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        176
+      ],
+      "id": "c4848308-71f9-4eef-81ad-3d43aec8966b",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "7agTHkmrJ7zRvvU3",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Gmail Trigger').item.json.text }}",
+        "options": {
+          "systemMessage": "You are a customer support agent for TechHaven. Your job is to answer customer emails using the provided knowledge base tool. If you cannot find the answer in the knowledge base, politely ask the user to contact support at support@techhaven.com. Be friendly, professional, and use the user's name if available. Always sign off as 'The TechHaven Support Team'"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        160,
+        -128
+      ],
+      "id": "3629245f-6c96-4036-a39b-47c2f517797b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Call this tool to access FAQ and policy information",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "codedex",
+          "mode": "list",
+          "cachedResultName": "codedex"
+        },
+        "options": {
+          "pineconeNamespace": "techhaven-faq"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        416,
+        144
+      ],
+      "id": "da0607d9-5782-4029-8b56-9d0dca1e4523",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "E4V6rLCx4sfBlo5o",
+          "name": "Pinecone account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        448,
+        304
+      ],
+      "id": "8382d8e2-6b4b-4954-9aba-4b1faaffecfc",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "y0vdeTLFxDd96K0q",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        96,
+        64
+      ],
+      "id": "4935e1ba-ede5-4a23-a0bc-4eefaae54997",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "jbOILisg14o7XCyc",
+          "name": "Groq account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "reply",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "emailType": "text",
+        "message": "={{ $('AI Agent').item.json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        832,
+        -128
+      ],
+      "id": "1e151e06-fb56-4997-9623-41c2cb7ab5ff",
+      "name": "Reply to a message",
+      "webhookId": "9c84c040-4da6-483d-93fc-c5dea90995ef",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "agnIZDojYIaT4gJH",
+          "name": "Gmail account 4"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $('Gmail Trigger').item.json.id }}",
+        "labelIds": [
+          "CATEGORY_FORUMS"
+        ]
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        608,
+        -128
+      ],
+      "id": "0be16daf-e9d8-4e78-9002-d0edeea56d87",
+      "name": "Add label to message",
+      "webhookId": "b34c76d1-1f4a-4f73-97a1-8eedec136a03",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "j0Z578oTOL1K1lx7",
+          "name": "Gmail account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# #Customer Support Workflow\n",
+        "height": 96,
+        "width": 528
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        16,
+        -288
+      ],
+      "typeVersion": 1,
+      "id": "e86a764c-6624-4879-9985-cc2496771bba",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Add label to message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add label to message": {
+      "main": [
+        [
+          {
+            "node": "Reply to a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4351d855-a858-42ce-9362-b4a3ff6fb2d1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0bfdf06073c82d5c5e478b34d4f49f29c15fccdb4397382420cd97a8c0aaff05"
+  },
+  "id": "rouJNZqcWL4I8LGk",
+  "tags": []
+}
