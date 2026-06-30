@@ -216,7 +216,7 @@ The Gmail Trigger is the starting point — the "ears" of your workflow. It watc
 
 When you click "Execute step" to test it, you'll see the email's raw data flow out: `id`, `threadId`, `subject`, `from`, `to`, `body text`, `labels`, `date`, and more. The most important field we'll use downstream is `$json.text` (the email body) and `$json.id` (the message ID, which we need to reply to the right thread).
 
-![Step 2c - Gmail Trigger Output Data](./SS/4.png)
+<!-- ![Step 2c - Gmail Trigger Output Data](./SS/4.png) -->
 
 ---
 
@@ -233,7 +233,7 @@ The Text Classifier solves this by acting as a smart bouncer: it reads each inco
 
 **Configuration:**
 
-![Step 3a - Text Classifier Connected](./SS/5.png)
+![Step 3a - Text Classifier Connected](./SS/4.png)
 
 Open the Text Classifier node and configure:
 
@@ -242,7 +242,7 @@ Open the Text Classifier node and configure:
   - Category 1: `Customer Support` — Description: *"An email that is related to help out a customer. They may be asking questions about your product, policies, or services."*
   - Category 2: `Other` — Description: *"Any email that is not related to customer support."*
 
-![Step 3b - Text Classifier Configuration](./SS/6.png)
+![Step 3b - Text Classifier Configuration](./SS/5.png)
 
 > **Why two categories and not just one?** The classifier needs contrast to make a decision. If you only tell it what "Customer Support" looks like, it has nothing to compare against. By defining "Other" explicitly, you're giving it a clear mental model: *"If it matches Customer Support, go left. If it matches Other, go right."* This binary routing pattern is fundamental to building reliable AI pipelines — you'll see it everywhere.
 
@@ -261,7 +261,7 @@ The Text Classifier is smart, but it needs an actual AI model to do the classifi
 
 **Configuration:**
 
-![Step 4 - OpenRouter Chat Model](./SS/7.png)
+![Step 4 - OpenRouter Chat Model](./SS/6.png)
 
 - **Credential**: Click "Create new credential" → paste your OpenRouter API key
 - **Model**: `meta-llama/llama-3-8b-instruct`
@@ -279,7 +279,7 @@ Remember the "Other" branch from the Text Classifier? We need to connect it to s
 2. Search for "No Operation, do nothing"
 3. Add it
 
-![Step 5 - No Operation Node](./SS/8.png)
+<!-- ![Step 5 - No Operation Node](./SS/8.png) -->
 
 > **Why not just leave the "Other" branch unconnected?** In production workflows, unconnected branches can cause warnings and sometimes errors depending on the n8n version. More importantly, being explicit about "do nothing" makes the workflow easier to read and understand when you come back to it 3 months later. It's like adding a comment in code — "we intentionally ignore this case."
 
@@ -296,7 +296,7 @@ This is the core of the entire system — the brain that actually understands th
 
 **Configuration:**
 
-![Step 6a - AI Agent Connected](./SS/9.png)
+![Step 6a - AI Agent Connected](./SS/8.png)
 
 Open the AI Agent node:
 
@@ -316,7 +316,7 @@ support at support@techhaven.com. Be friendly, professional, and use
 the user's name if available. Always sign off as 'The TechHaven Support Team'.
 ```
 
-![Step 6b - AI Agent Configuration & System Prompt](./SS/10.png)
+![Step 6b - AI Agent Configuration & System Prompt](./SS/9.png)
 
 > **Why does the system prompt matter so much?** The system prompt is the difference between a generic AI reply and a branded, professional one. Without it, the AI might sign off as "AI Assistant" or give a cold, robotic response. The system prompt defines the agent's identity, constraints ("only use the knowledge base"), tone ("friendly, professional"), and fallback behaviour ("direct to support email if unsure"). Think of it as the job description you'd give a new support hire on Day 1.
 
@@ -335,7 +335,7 @@ Just like the Text Classifier needed a model, the AI Agent needs one too — but
 
 **Configuration:**
 
-![Step 7 - Groq Chat Model Configuration](./SS/11.png)
+![Step 7 - Groq Chat Model Configuration](./SS/10.png)
 
 - **Credential**: Click "Create new credential" → paste your Groq API key
 - **Model**: `llama-3.3-70b-versatile`
@@ -357,7 +357,7 @@ This is the knowledge layer — where your company's documents live in a form th
 5. Leave other settings as default → click "Create Index"
 6. Once created, go to your index → click "Namespace" → create a namespace called `techhaven`
 
-![Step 8a - Pinecone Create Index](./SS/12.png)
+![Step 8a - Pinecone Create Index](./SS/14.png)
 
 > **What's a namespace?** Think of your Pinecone index as a database, and namespaces as tables within it. If you had multiple clients or products, each could have its own namespace — so TechHaven's policies live in `techhaven` and don't get mixed up with another client's docs. Clean and organised.
 
@@ -379,7 +379,7 @@ For this tutorial, we've pre-loaded TechHaven's warranty policy, return policy, 
 
 **Configuration:**
 
-![Step 8b - Pinecone Vector Store Configuration](./SS/13.png)
+![Step 8b - Pinecone Vector Store Configuration](./SS/15.png)
 
 - **Credential**: Your Pinecone API key
 - **Operation Mode**: `Retrieve Documents (As Tool for AI Agent)`
@@ -405,7 +405,7 @@ Pinecone stores documents as vectors (arrays of numbers). To search those vector
 
 **Configuration:**
 
-![Step 9 - Google Gemini Embeddings](./SS/14.png)
+![Step 9 - Google Gemini Embeddings](./SS/16.png)
 
 - **Credential**: Your Google AI Studio API key
 - **Model**: Leave as default (`text-embedding-004` or whatever's current)
@@ -425,7 +425,7 @@ Once the AI Agent has generated a reply, we want to tag the original email so we
 
 **Configuration:**
 
-![Step 10 - Add Label to Message](./SS/15.png)
+![Step 10 - Add Label to Message](./SS/17.png)
 
 - **Credential**: Your Gmail account (same one as the trigger)
 - **Resource**: Message
@@ -448,7 +448,7 @@ The final node — this takes the AI Agent's generated reply and actually sends 
 
 **Configuration:**
 
-![Step 11 - Reply to Message Configuration](./SS/16.png)
+![Step 11 - Reply to Message Configuration](./SS/19.png)
 
 - **Credential**: Your Gmail account
 - **Resource**: Message
@@ -471,7 +471,7 @@ Now the moment of truth. Here's how to test the whole pipeline end to end:
 
 Click the toggle in the top right corner of n8n to set the workflow from "Inactive" to "Active." This means it's now listening for real emails.
 
-![Testing - Complete Workflow Active](./SS/17.png)
+![Testing - Complete Workflow Active](./SS/21.png)
 
 **Step 2 — Send a test email**
 
@@ -480,13 +480,13 @@ Send an email to the Gmail address you connected in the trigger. Use a realistic
 > *Subject: Broken Screen on my TechHaven Pro*
 > *Hi TechHaven Support, I dropped my device yesterday and the screen cracked. I bought it three months ago. Does my warranty cover accidental damage, and how can I get a replacement? Please help*
 
-![Testing - Test Email Sent](./SS/18.png)
+![Testing - Test Email Sent](./SS/22.png)
 
 **Step 3 — Watch it run**
 
 Go back to n8n. Within a few seconds (Gmail polling interval), you should see the workflow light up with green checkmarks flowing from left to right — Gmail Trigger fires, Text Classifier routes to "Customer Support," AI Agent searches Pinecone, generates a reply, labels the email, and sends the reply.
 
-![Testing - Workflow Executing](./SS/19.png)
+![Testing - Workflow Executing](./SS/23.png)
 
 **Step 4 — Check your inbox**
 
@@ -534,23 +534,22 @@ By building this workflow, you now understand:
 | 1. n8n Empty Canvas | ![](./SS/1.png) |
 | 2. Gmail Trigger Added | ![](./SS/2.png) |
 | 3. Gmail OAuth Setup | ![](./SS/3.png) |
-| 4. Gmail Trigger Output Data | ![](./SS/4.png) |
-| 5. Text Classifier Connected | ![](./SS/5.png) |
-| 6. Text Classifier Configuration | ![](./SS/6.png) |
-| 7. OpenRouter Chat Model | ![](./SS/7.png) |
-| 8. No Operation Node | ![](./SS/8.png) |
-| 9. AI Agent Connected | ![](./SS/9.png) |
-| 10. AI Agent System Prompt | ![](./SS/10.png) |
-| 11. Groq Chat Model | ![](./SS/11.png) |
-| 12. Pinecone Index Setup | ![](./SS/12.png) |
-| 13. Pinecone Vector Store Config | ![](./SS/13.png) |
-| 14. Google Gemini Embeddings | ![](./SS/14.png) |
-| 15. Add Label to Message | ![](./SS/15.png) |
-| 16. Reply to Message Config | ![](./SS/16.png) |
-| 17. Final Workflow Active | ![](./SS/17.png) |
-| 18. Test Email Sent | ![](./SS/18.png) |
-| 19. Workflow Executing | ![](./SS/19.png) |
-| 24. AI Reply in Gmail | ![](./SS/24.png) |
+| 4. Text Classifier Connected | ![](./SS/4.png) |
+| 5. Text Classifier Configuration | ![](./SS/5.png) |
+| 6. OpenRouter Chat Model | ![](./SS/6.png) |
+<!-- | 8. No Operation Node | ![](./SS/8.png) | -->
+| 7. AI Agent Connected | ![](./SS/8.png) |
+| 8. AI Agent System Prompt | ![](./SS/9.png) |
+| 9. Groq Chat Model | ![](./SS/10.png) |
+| 10. Pinecone Index Setup | ![](./SS/14.png) |
+| 11. Pinecone Vector Store Config | ![](./SS/15.png) |
+| 12. Google Gemini Embeddings | ![](./SS/16.png) |
+| 13. Add Label to Message | ![](./SS/17.png) |
+| 14. Reply to Message Config | ![](./SS/16.png) |
+| 15. Final Workflow Active | ![](./SS/19.png) |
+| 16. Test Email Sent | ![](./SS/22.png) |
+| 17. Workflow Executing | ![](./SS/23.png) |
+| 18. AI Reply in Gmail | ![](./SS/24.png) |
 
 ---
 
