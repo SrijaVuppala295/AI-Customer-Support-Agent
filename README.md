@@ -536,17 +536,17 @@ By building this workflow, you now understand:
 | 3. Gmail OAuth Setup | ![](./SS/3.png) |
 | 4. Text Classifier Connected | ![](./SS/4.png) |
 | 5. Text Classifier Configuration | ![](./SS/5.png) |
-| 6. OpenRouter Chat Model | ![](./SS/6.png) |
+| 6. OpenRouter Chat Model | ![](./SS/6.png) ![](./SS/7.png)|
 <!-- | 8. No Operation Node | ![](./SS/8.png) | -->
 | 7. AI Agent Connected | ![](./SS/8.png) |
 | 8. AI Agent System Prompt | ![](./SS/9.png) |
-| 9. Groq Chat Model | ![](./SS/10.png) |
-| 10. Pinecone Index Setup | ![](./SS/14.png) |
+| 9. Groq Chat Model | ![](./SS/10.png) ![](./SS/11.png) |
+| 10. Pinecone Index Setup | ![](./SS/13.png) ![](./SS/14.png) |
 | 11. Pinecone Vector Store Config | ![](./SS/15.png) |
 | 12. Google Gemini Embeddings | ![](./SS/16.png) |
-| 13. Add Label to Message | ![](./SS/17.png) |
-| 14. Reply to Message Config | ![](./SS/16.png) |
-| 15. Final Workflow Active | ![](./SS/19.png) |
+| 13. Add Label to Message | ![](./SS/17.png) ![](./SS/18.png) |
+| 14. Reply to Message Config | ![](./SS/19.png) ![](./SS/20.png) |
+| 15. Final Workflow Active | ![](./SS/21.png) |
 | 16. Test Email Sent | ![](./SS/22.png) |
 | 17. Workflow Executing | ![](./SS/23.png) |
 | 18. AI Reply in Gmail | ![](./SS/24.png) |
